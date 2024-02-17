@@ -730,7 +730,7 @@ class AfterDetailerScript(scripts.Script):
             finally:
                 p2.close()
 
-            self.compare_prompt(p2, processed, n=n)
+            # self.compare_prompt(p2, processed, n=n)
             p2 = copy(i2i)
             p2.init_images = [processed.images[0]]
 
