@@ -407,11 +407,6 @@ class AfterDetailerScript(scripts.Script):
             p, p.all_prompts, p.all_seeds, p.all_subseeds, None, 0, 0
         )
 
-    def write_params_txt(self, content: str) -> None:
-        params_txt = Path(paths.data_path, "params.txt")
-        with suppress(Exception):
-            params_txt.write_text(content, encoding="utf-8")
-
     @staticmethod
     def script_args_copy(script_args):
         type_: type[list] | type[tuple] = type(script_args)
@@ -749,7 +744,6 @@ class AfterDetailerScript(scripts.Script):
         pp.image = self.ensure_rgb_image(pp.image)
         init_image = copy(pp.image)
         arg_list = self.get_args(p, *args_)
-        params_txt_content = Path(paths.data_path, "params.txt").read_text("utf-8")
 
         if self.need_call_postprocess(p):
             dummy = Processed(p, [], p.seed, "")
@@ -774,8 +768,6 @@ class AfterDetailerScript(scripts.Script):
                 if hasattr(p.scripts, "before_process"):
                     p.scripts.before_process(copy_p)
                 p.scripts.process(copy_p)
-
-        self.write_params_txt(params_txt_content)
 
 
 def on_after_component(component, **_kwargs):
