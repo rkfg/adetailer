@@ -5,16 +5,28 @@ from dataclasses import dataclass
 from functools import cached_property, partial
 from typing import Any, Literal, NamedTuple, Optional
 
-from pydantic import (
-    BaseModel,
-    Extra,
-    NonNegativeFloat,
-    NonNegativeInt,
-    PositiveInt,
-    confloat,
-    conint,
-    validator,
-)
+try:
+    from pydantic.v1 import (
+        BaseModel,
+        Extra,
+        NonNegativeFloat,
+        NonNegativeInt,
+        PositiveInt,
+        confloat,
+        conint,
+        validator,
+    )
+except ImportError:
+    from pydantic import (
+        BaseModel,
+        Extra,
+        NonNegativeFloat,
+        NonNegativeInt,
+        PositiveInt,
+        confloat,
+        conint,
+        validator,
+    )
 
 
 @dataclass
@@ -70,6 +82,7 @@ class ADetailerArgs(BaseModel, extra=Extra.forbid):
     ad_vae: Optional[str] = None
     ad_use_sampler: bool = False
     ad_sampler: str = "DPM++ 2M Karras"
+    ad_scheduler: str = "Use same scheduler"
     ad_use_noise_multiplier: bool = False
     ad_noise_multiplier: confloat(ge=0.5, le=1.5) = 1.0
     ad_use_clip_skip: bool = False
@@ -148,8 +161,13 @@ class ADetailerArgs(BaseModel, extra=Extra.forbid):
         )
         ppop(
             "ADetailer use separate sampler",
-            ["ADetailer use separate sampler", "ADetailer sampler"],
+            [
+                "ADetailer use separate sampler",
+                "ADetailer sampler",
+                "ADetailer scheduler",
+            ],
         )
+        ppop("ADetailer scheduler", cond="Use same scheduler")
         ppop(
             "ADetailer use separate noise multiplier",
             ["ADetailer use separate noise multiplier", "ADetailer noise multiplier"],
@@ -213,6 +231,7 @@ _all_args = [
     ("ad_vae", "ADetailer VAE"),
     ("ad_use_sampler", "ADetailer use separate sampler"),
     ("ad_sampler", "ADetailer sampler"),
+    ("ad_scheduler", "ADetailer scheduler"),
     ("ad_use_noise_multiplier", "ADetailer use separate noise multiplier"),
     ("ad_noise_multiplier", "ADetailer noise multiplier"),
     ("ad_use_clip_skip", "ADetailer use separate CLIP skip"),
@@ -235,3 +254,14 @@ BBOX_SORTBY = [
     "Area (large to small)",
 ]
 MASK_MERGE_INVERT = ["None", "Merge", "Merge and Invert"]
+
+_script_default = (
+    "dynamic_prompting",
+    "dynamic_thresholding",
+    "wildcard_recursive",
+    "wildcards",
+    "lora_block_weight",
+    "negpip",
+    "soft_inpainting",
+)
+SCRIPT_DEFAULT = ",".join(sorted(_script_default))

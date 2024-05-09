@@ -1,8 +1,14 @@
 # ADetailer
 
-ADetailer is a extension for stable diffusion webui, similar to Detection Detailer, except it uses ultralytics instead of the mmdet.
+ADetailer is an extension for the stable diffusion webui that does automatic masking and inpainting. It is similar to the Detection Detailer.
 
 ## Install
+
+You can install it directly from the Extensions tab.
+
+![image](https://i.imgur.com/qaXtoI6.png)
+
+Or
 
 (from Mikubill/sd-webui-controlnet)
 
@@ -13,12 +19,6 @@ ADetailer is a extension for stable diffusion webui, similar to Detection Detail
 5. Wait 5 seconds, and you will see the message "Installed into stable-diffusion-webui\extensions\adetailer. Use Installed tab to restart".
 6. Go to "Installed" tab, click "Check for updates", and then click "Apply and restart UI". (The next time you can also use this method to update extensions.)
 7. Completely restart A1111 webui including your terminal. (If you do not know what is a "terminal", you can reboot your computer: turn your computer off and turn it on again.)
-
-You can now install it directly from the Extensions tab.
-
-![image](https://i.imgur.com/g6GdRBT.png)
-
-You **DON'T** need to download any base model from huggingface.
 
 ## Options
 
@@ -59,16 +59,16 @@ If you select `Passthrough`, the controlnet settings you set outside of ADetaile
 
 ## Advanced Options
 
-API request example: [wiki/API](https://github.com/Bing-su/adetailer/wiki/API)
+API request example: [wiki/REST-API](https://github.com/Bing-su/adetailer/wiki/REST-API)
 
-`ui-config.json` entries: [wiki/ui-config.json](https://github.com/Bing-su/adetailer/wiki/ui-config.json)
-
-`[SEP], [SKIP]` tokens: [wiki/Advanced](https://github.com/Bing-su/adetailer/wiki/Advanced)
+`[SEP], [SKIP], [PROMPT]` tokens: [wiki/Advanced](https://github.com/Bing-su/adetailer/wiki/Advanced)
 
 ## Media
 
-- 🎥 [どこよりも詳しいAfter Detailer (adetailer)の使い方① 【Stable Diffusion】](https://youtu.be/sF3POwPUWCE)
-- 🎥 [どこよりも詳しいAfter Detailer (adetailer)の使い方② 【Stable Diffusion】](https://youtu.be/urNISRdbIEg)
+- 🎥 [どこよりも詳しい After Detailer (adetailer)の使い方 ① 【Stable Diffusion】](https://youtu.be/sF3POwPUWCE)
+- 🎥 [どこよりも詳しい After Detailer (adetailer)の使い方 ② 【Stable Diffusion】](https://youtu.be/urNISRdbIEg)
+
+- 📜 [ADetailer Installation and 5 Usage Methods](https://kindanai.com/en/manual-adetailer/)
 
 ## Model
 
@@ -91,7 +91,7 @@ YOLO World model: https://docs.ultralytics.com/models/yolo-world/
 
 ### Additional Model
 
-Put your [ultralytics](https://github.com/ultralytics/ultralytics) yolo model in `webui/models/adetailer`. The model name should end with `.pt`.
+Put your [ultralytics](https://github.com/ultralytics/ultralytics) yolo model in `models/adetailer`. The model name should end with `.pt`.
 
 It must be a bbox detection or segment model and use all label.
 
@@ -102,3 +102,17 @@ ADetailer works in three simple steps.
 1. Create an image.
 2. Detect object with a detection model and create a mask image.
 3. Inpaint using the image from 1 and the mask from 2.
+
+## Development
+
+ADetailer is developed and tested using the stable-diffusion 1.5 model, for the latest version of [AUTOMATIC1111/stable-diffusion-webui](https://github.com/AUTOMATIC1111/stable-diffusion-webui) repository only.
+
+## License
+
+ADetailer is a derivative work that uses two AGPL-licensed works (stable-diffusion-webui, ultralytics) and is therefore distributed under the AGPL license.
+
+## See Also
+
+- https://github.com/ototadana/sd-face-editor
+- https://github.com/continue-revolution/sd-webui-segment-anything
+- https://github.com/portu-sim/sd-webui-bmab
